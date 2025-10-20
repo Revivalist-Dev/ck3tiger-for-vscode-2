@@ -26,10 +26,14 @@ export async function getPaths() {
     const tigerPath = config.get<string>("tigerPath");
     const ck3Path = config.get<string>("ck3Path");
     const modPath = config.get<string>("modPath");
+    const showVanilla = config.get<boolean>("showVanilla");
+    const showMods = config.get<boolean>("showMods");
 
     return {
         tigerPath,
         ck3Path,
         modPath,
+        showVanilla,
+        showMods,
     };
 }

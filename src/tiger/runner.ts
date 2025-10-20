@@ -25,7 +25,7 @@ async function executeValidationWithProgress(
 ) {
     progress.report({ message: "Getting paths" });
 
-    const { ck3Path, tigerPath, modPath } = await getPaths();
+    const { ck3Path, tigerPath, modPath, showVanilla, showMods } = await getPaths();
 
     // check if paths are set
     if (!ck3Path || !tigerPath || !modPath) {
@@ -36,7 +36,17 @@ async function executeValidationWithProgress(
     const tigerLogPath = getTigerLogPath(tigerPath);
 
     progress.report({ message: `Running ck3tiger` });
-    const command = `"${tigerPath}" --ck3 "${ck3Path}" --json "${modPath}" > "${tigerLogPath}"`;
+    let command = `"${tigerPath}" --ck3 "${ck3Path}" --json "${modPath}"`;
+
+    if (showVanilla) {
+        command += ` --show-vanilla`;
+    }
+
+    if (showMods) {
+        command += ` --show-mods`;
+    }
+
+    command += ` > "${tigerLogPath}"`;
 
     log(`Running ck3tiger:\n> ${command}\n`);
     await executeCommandAsChildProcess(command);
